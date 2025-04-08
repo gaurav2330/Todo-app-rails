@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Sign In</h2>
+
+  <%= form_with scope: :user, url: session_path(:user), local: true do |f| %>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: "current-password" %>
+
+    <%= f.submit "Sign In" %>
+  <% end %>
+</div>
