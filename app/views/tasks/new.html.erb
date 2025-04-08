@@ -1,24 +1,25 @@
-<h1>New Task</h1>
+<div class="container" style="max-width: 600px; margin: 20px auto;">
+  <h2>Create a New Task</h2>
 
-<%= form_with model: @task, local: true do |f| %>
-  <div>
-    <%= f.label :title %>
-    <%= f.text_field :title, required: true %>
-  </div>
+  <%= form_with model: @task, local: true do |f| %>
+    <div>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "form-control", required: true, placeholder: "Task Title" %>
+    </div>
 
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
+    <div>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control", placeholder: "Task Description" %>
+    </div>
 
-  <div>
-    <%= f.label :status %>
-    <%= f.select :status, options_for_select(["not_started", "in_progress", "completed"], @task.status) %>
-  </div>
+    <div>
+      <%= f.label :status %>
+      <%= f.select :status, options_for_select(["not_started", "in_progress", "completed"], @task.status || "not_started"), class: "form-control" %>
+    </div>
 
-  <div>
-    <%= f.submit "Create Task", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<%= link_to "Back to Tasks", tasks_path, class: "btn btn-secondary" %>
+    <div style="margin-top: 20px;">
+      <%= f.submit "Create Task", class: "btn btn-primary" %>
+      <%= link_to "Cancel", tasks_path, class: "btn btn-secondary", style: "margin-left: 10px;" %>
+    </div>
+  <% end %>
+</div>

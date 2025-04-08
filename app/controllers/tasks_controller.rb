@@ -2,14 +2,12 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    binding.pry
     @tasks = current_user.tasks
-    render json: @tasks
   end
 
   def show
     @task = current_user.tasks.find(params[:id])
-    render json: @task
+    render :edit
   end
 
   def create
@@ -24,9 +22,9 @@ class TasksController < ApplicationController
   def update
     @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      render json: @task
+      redirect_to tasks_path, notice: "Task updated successfully!"
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -34,6 +32,10 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
     @task.destroy
     head :no_content
+  end
+
+  def new
+    @task = current_user.tasks.new
   end
 
   private
