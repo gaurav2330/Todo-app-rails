@@ -1,0 +1,45 @@
+<h1>Welcome to the Todo App</h1>
+
+<div class="container">
+  <% if user_signed_in? %>
+    <p>
+      Hello, <%= current_user.email %>!
+    </p>
+    <p>
+      <%= link_to 'View Your Tasks', tasks_path, class: 'btn' %>
+    </p>
+    <p>
+      <a href="#" onclick="confirmLogout('<%= destroy_user_session_path %>')" class="btn btn-danger">Logout</a>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to 'Login', new_user_session_path, class: 'btn' %> or 
+      <%= link_to 'Sign Up', new_user_registration_path, class: 'btn' %>
+    </p>
+  <% end %>
+</div>
+
+<script>
+  function confirmLogout(logoutUrl) {
+    if (confirm("Are you sure you want to log out?")) {
+      fetch(logoutUrl, {
+        method: "DELETE",
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/"; // Redirect to the homepage or login page after logout
+          } else {
+            alert("Failed to log out. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Logout error:", error);
+          alert("An error occurred. Please try again.");
+        });
+    }
+  }
+</script>
